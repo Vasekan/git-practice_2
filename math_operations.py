@@ -1,3 +1,3 @@
 def add_numbers(a, b):
-#Пам пам 
+#Пам па
     return a + b
