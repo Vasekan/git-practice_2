@@ -1,6 +1,11 @@
 name: Simple CI
 
-on: [push]
+# 🔹 Запускаем CI не только при push, но и при pull_request (для проверки PR)
+on:
+  push:
+    branches: [ main, development, release ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
@@ -27,5 +32,5 @@ jobs:
           print(f'10 + 5 = {result2}')
           assert result2 == 15, 'Ошибка: 10+5 должно быть 15'
           
-          print('Все тесты новой функции пройдены!')
+          print('✅ Все тесты новой функции пройдены!')
           "
