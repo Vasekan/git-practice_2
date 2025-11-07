@@ -1,0 +1,31 @@
+name: Simple CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Say Hello
+        run: echo "Hello CI!"
+        
+      - name: Simple test
+        run: |
+          python -c "
+          from math_operations import add_numbers
+          
+          # Тест 1
+          result1 = add_numbers(2, 3)
+          print(f'2 + 3 = {result1}')
+          assert result1 == 5, 'Ошибка: 2+3 должно быть 5'
+          
+          # Тест 2
+          result2 = add_numbers(10, 5)
+          print(f'10 + 5 = {result2}')
+          assert result2 == 15, 'Ошибка: 10+5 должно быть 15'
+          
+          print('Все тесты новой функции пройдены!')
+          "
