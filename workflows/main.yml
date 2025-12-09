@@ -34,3 +34,35 @@ jobs:
           
           print('✅ Все тесты новой функции пройдены!')
           "
+
+      - name: Generate auto-docs
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "📋 Создаю автоматическую документацию..."
+          
+          # Создаем папку для docs если её нет
+          mkdir -p docs
+          
+          # Генерируем простой README с информацией о проекте
+          echo "# Автоматическая документация" > docs/AUTO_GENERATED.md
+          echo "" >> docs/AUTO_GENERATED.md
+          echo "**Дата генерации:** $(date)" >> docs/AUTO_GENERATED.md
+          echo "**Коммит:** ${{ github.sha }}" >> docs/AUTO_GENERATED.md
+          echo "**Ветка:** ${{ github.ref }}" >> docs/AUTO_GENERATED.md
+          echo "" >> docs/AUTO_GENERATED.md
+          echo "## 🧪 Результаты тестов" >> docs/AUTO_GENERATED.md
+          echo "Все тесты пройдены успешно! ✅" >> docs/AUTO_GENERATED.md
+          echo "" >> docs/AUTO_GENERATED.md
+          echo "## 📁 Структура проекта" >> docs/AUTO_GENERATED.md
+          echo '```' >> docs/AUTO_GENERATED.md
+          ls -la >> docs/AUTO_GENERATED.md
+          echo '```' >> docs/AUTO_GENERATED.md
+          
+          echo "✅ Документация создана: docs/AUTO_GENERATED.md"
+          
+      - name: Save docs as artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-documentation
+          path: docs/AUTO_GENERATED.md
