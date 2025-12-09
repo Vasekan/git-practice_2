@@ -17,8 +17,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}          # важно: чтобы не быть в detached HEAD
-          fetch-depth: 0                  # чтобы пуш/история работали корректно
+          ref: ${{ github.ref }}          
+          fetch-depth: 0                  
           persist-credentials: true
 
       - name: Set up Python
@@ -48,7 +48,7 @@ jobs:
           print(f"10 + 5 = {result2}")
           assert result2 == 15, "Ошибка: 10+5 должно быть 15"
 
-          print("✅ Все тесты пройдены!")
+          print("Все тесты пройдены!")
           PY
 
       - name: Generate auto-docs
@@ -110,15 +110,15 @@ jobs:
                       })
 
               md = f"""<!-- AUTO-GENERATED DOCS START -->
-          ## 🤖 Автоматическая документация
+          ## Автоматическая документация
 
           **Обновлено:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  
           **Коммит:** `{os.environ.get('GITHUB_SHA', 'unknown')[:8]}`  
-          **Статус:** ✅ Все тесты пройдены
+          **Статус:** Все тесты пройдены
           """
 
               if classes:
-                  md += "\n### 🏗 Классы\n\n"
+                  md += "\n### Классы\n\n"
                   for cls in classes:
                       md += f"#### {cls['name']}\n"
                       md += f"{cls['doc']}\n\n"
@@ -129,7 +129,7 @@ jobs:
                       md += "\n"
 
               if functions:
-                  md += "### 🔧 Функции\n\n"
+                  md += "### Функции\n\n"
                   for fn in functions:
                       args = ", ".join(fn["args"])
                       md += f"- **`{fn['name']}({args})`**  \n"
@@ -143,10 +143,10 @@ jobs:
               with open(OUT_FILE, "w", encoding="utf-8") as f:
                   f.write(md)
 
-              print("✅ Документация сгенерирована")
+              print("Документация сгенерирована")
 
           except Exception as e:
-              print(f"❌ Ошибка генерации документации: {e}")
+              print(f"Ошибка генерации документации: {e}")
               raise
           PY
 
@@ -163,7 +163,7 @@ jobs:
           END = "<!-- AUTO-GENERATED DOCS END -->"
 
           if not os.path.exists(DOCS_FILE):
-              print("⚠️ Файл с документацией не найден, пропускаю обновление README.")
+              print("Файл с документацией не найден, пропускаю обновление README.")
               raise SystemExit(0)
 
           with open(DOCS_FILE, "r", encoding="utf-8") as f:
@@ -186,7 +186,7 @@ jobs:
               f.write(new_readme.rstrip() + "\n")
 
           os.remove(DOCS_FILE)
-          print("✅ README.md обновлён")
+          print("README.md обновлён")
           PY
 
       - name: Commit changes
@@ -199,7 +199,7 @@ jobs:
           git add README.md
 
           if git diff --cached --quiet; then
-            echo "📭 Нет изменений для коммита"
+            echo "Нет изменений для коммита"
             exit 0
           fi
 
